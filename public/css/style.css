@@ -195,17 +195,61 @@ body.app-body {
     color: #353535;
 }
 
+.reviews-section .reviews-count {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    font-weight: 600;
+}
+
+.review-card,
+.review-empty-card {
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-md);
+    box-shadow: 0 10px 22px rgba(17, 17, 17, 0.05);
+}
+
+.review-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.review-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 24px rgba(17, 17, 17, 0.08);
+}
+
+.review-stars {
+    display: inline-flex;
+    gap: 0.16rem;
+    font-size: 1.05rem;
+}
+
+.review-stars .star-filled {
+    color: #1f1f1f;
+}
+
+.review-stars .star-empty {
+    color: #8e8e8e;
+}
+
+.review-comment {
+    color: #3d3d3d;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
 .form-card .form-label {
     font-weight: 600;
 }
 
-.form-card .form-control {
+.form-card .form-control,
+.form-card .form-select {
     border-radius: var(--radius-md);
     border-color: #d8d8d8;
     padding: 0.65rem 0.8rem;
 }
 
-.form-card .form-control:focus {
+.form-card .form-control:focus,
+.form-card .form-select:focus {
     border-color: #ff8ea5;
     box-shadow: 0 0 0 0.2rem rgba(255, 56, 92, 0.15);
 }

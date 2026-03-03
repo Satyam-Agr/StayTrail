@@ -1,11 +1,9 @@
 //imports 
 const express = require('express');
-const mongoose = require('mongoose');
 const path = require('path');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
-const connectToMongoDB = require('./connection');
-const Listing = require('./models/listing');
+const connectToMongoDB = require('./utils/connection');
 const listingsRouter = require('./routes/listings');
 const errorHandler = require('./middlewares/errorHandling');
 const ExpressError = require('./utils/errors');

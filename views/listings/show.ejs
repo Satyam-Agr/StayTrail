@@ -22,5 +22,76 @@
         </div>
       </div>
     </article>
+
+    <section class="reviews-section mt-4 mt-lg-5">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <h2 class="h4 mb-0">Guest Reviews</h2>
+        <span class="reviews-count"><%= listing.reviews.length %> total</span>
+      </div>
+
+      <% if (listing.reviews.length === 0) { %>
+        <div class="card review-empty-card">
+          <div class="card-body py-4">
+            <p class="text-muted mb-0">No reviews yet. Be the first to review this listing.</p>
+          </div>
+        </div>
+      <% } else { %>
+        <div class="row g-3 g-lg-4">
+          <% listing.reviews.forEach(review => { %>
+            <div class="col-12 col-md-6">
+              <div class="card review-card h-100">
+                <div class="card-body d-flex flex-column">
+                  <div class="review-stars mb-2" aria-label="<%= review.rating %> out of 5 stars">
+                    <% for (let i = 1; i <= 5; i++) { %>
+                      <span class="<%= i <= review.rating ? 'star-filled' : 'star-empty' %>"><%= i <= review.rating ? '★' : '☆' %></span>
+                    <% } %>
+                  </div>
+                  <p class="card-text review-comment flex-grow-1"><%= review.comment %></p>
+                  <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST" class="m-0 pt-2">
+                    <button type="submit" class="btn btn-danger-soft btn-sm">Delete Review</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      <% } %>
+    </section>
+
+    <section class="row justify-content-center mt-4 mt-lg-5">
+      <div class="col-12">
+        <div class="card form-card">
+          <div class="card-body p-4 p-lg-5">
+            <h3 class="h5 mb-3">Add Your Review</h3>
+            <form action="/listings/<%= listing._id %>/reviews" method="POST" class="row g-3 needs-validation" novalidate>
+              <div class="col-12 col-md-5">
+                <label for="rating" class="form-label">Rating</label>
+                <select id="rating" name="review[rating]" class="form-select" required>
+                  <option value="" selected disabled>Choose rating</option>
+                  <option value="5">5 - Excellent</option>
+                  <option value="4">4 - Very Good</option>
+                  <option value="3">3 - Good</option>
+                  <option value="2">2 - Fair</option>
+                  <option value="1">1 - Poor</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please select a rating.
+                </div>
+              </div>
+              <div class="col-12">
+                <label for="review" class="form-label">Review</label>
+                <textarea class="form-control" id="review" name="review[comment]" rows="4" required minlength="5"></textarea>
+                <div class="invalid-feedback">
+                  Please add a review (at least 5 characters).
+                </div>
+              </div>
+              <div class="col-12 d-flex gap-2">
+                <button type="submit" class="btn btn-brand">Submit Review</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </section>

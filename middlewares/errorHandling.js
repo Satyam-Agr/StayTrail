@@ -14,7 +14,7 @@ function errorHandler(err, req, res, next) {
         statusCode = 400;
         message = err.message;
     }
-
+    console.log(err);
     return res.status(statusCode).render("error", { statusCode, message });
 }
 

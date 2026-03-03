@@ -1,6 +1,6 @@
 {
   "name": "staytrail",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "A fullstack ari BNB like project",
   "main": "index.js",
   "scripts": {
