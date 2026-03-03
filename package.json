@@ -1,0 +1,31 @@
+{
+  "name": "staytrail",
+  "version": "1.0.0",
+  "description": "A fullstack ari BNB like project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Satyam-Agr/StayTrail.git"
+  },
+  "keywords": [],
+  "author": "Satyam Agrawal",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Satyam-Agr/StayTrail/issues"
+  },
+  "homepage": "https://github.com/Satyam-Agr/StayTrail#readme",
+  "dependencies": {
+    "ejs": "^4.0.1",
+    "ejs-mate": "^4.0.0",
+    "express": "^5.2.1",
+    "joi": "^18.0.2",
+    "method-override": "^3.0.0",
+    "mongoose": "^9.2.3"
+  }
+}

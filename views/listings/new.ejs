@@ -1,0 +1,65 @@
+<% layout('layoutes/boilerplate') -%>
+<section class="row justify-content-center">
+  <div class="col-12 col-lg-8 col-xl-7">
+    <div class="card form-card">
+      <div class="card-body p-4 p-lg-5">
+        <h1 class="mb-4">Create New Listing</h1>
+        <form action="/listings" method="POST" class="row g-3 needs-validation" novalidate >
+          <div class="col-12">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" id="title" name="listing[title]" class="form-control" required maxlength="60">
+            <div id="titleLimitWarning" class="title-limit-warning hidden">
+              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+              <span>Maximum 60 characters allowed</span>
+            </div>
+            <div class="invalid-feedback">
+              Please enter a listing title.
+            </div>
+          </div>
+
+          <div class="col-12">
+            <label for="description" class="form-label">Description</label>
+            <textarea id="description" name="listing[description]" class="form-control" rows="4" required></textarea>
+            <div class="invalid-feedback">
+              Please provide a description.
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <label for="price" class="form-label">Price (INR)</label>
+            <input type="number" id="price" name="listing[price]" class="form-control" required>
+            <div class="invalid-feedback">
+              Please enter a valid price.
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <label for="image" class="form-label">Image URL</label>
+            <input type="text" id="image" name="listing[image]" class="form-control">
+          </div>
+
+          <div class="col-12 col-md-6">
+            <label for="location" class="form-label">Location</label>
+            <input type="text" id="location" name="listing[location]" class="form-control" required>
+            <div class="invalid-feedback">
+              Please enter the location.
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <label for="country" class="form-label">Country</label>
+            <input type="text" id="country" name="listing[country]" class="form-control" required>
+            <div class="invalid-feedback">
+              Please enter the country.
+            </div>
+          </div>
+
+          <div class="col-12 d-flex flex-wrap gap-2 pt-2">
+            <button type="submit" class="btn btn-brand">Create Listing</button>
+            <a href="/listings" class="btn btn-outline-dark">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

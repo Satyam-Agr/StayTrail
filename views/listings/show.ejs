@@ -1,0 +1,26 @@
+<% layout('layoutes/boilerplate') -%>
+<section class="row justify-content-center">
+  <div class="col-12 col-lg-9 col-xl-8">
+    <article class="card listing-detail-card">
+      <img src="<%= listing.image %>" class="listing-detail-image" alt="<%= listing.title %>">
+      <div class="card-body p-4 p-lg-5">
+        <h1 class="detail-title"><%= listing.title %></h1>
+        <p class="detail-location"><%= listing.location %>, <%= listing.country %></p>
+        <p class="detail-price mb-4">&#8377;<%= listing.price.toLocaleString("en-in") %> <span>/ night</span></p>
+        <p class="detail-description"><%= listing.description %></p>
+
+        <div class="d-flex flex-wrap gap-2 pt-3">
+          <form action="/listings/<%= listing._id %>/edit" method="GET" class="m-0">
+            <button type="submit" class="btn btn-brand">Edit Listing</button>
+          </form>
+          <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" class="m-0">
+            <button type="submit" class="btn btn-danger-soft">Delete Listing</button>
+          </form>
+          <form action="/listings" method="GET" class="m-0">
+            <button type="submit" class="btn btn-outline-dark">Back to Listings</button>
+          </form>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
