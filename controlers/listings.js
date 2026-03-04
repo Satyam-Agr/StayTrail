@@ -1,3 +1,4 @@
+const flash = require('connect-flash');
 const Listing = require('../models/listing');
 const Review = require('../models/review');
 const ExpressError = require('../utils/errors');
@@ -5,8 +6,9 @@ const ExpressError = require('../utils/errors');
 //GET /listings - Get all listings
 async function showAllListings(req, res) {
     const listings = await Listing.find({});
+    //TODO: add emprty page for no listings found
     if (!listings) {
-        throw new ExpressError('No listings found', 500);
+        throw new ExpressError('No listings found', 404);
     }
     return res.render('listings/index', { listings });
 }
@@ -19,7 +21,8 @@ async function showListingDetails(req, res) {
     const id=req.params.id;
     const listing = await Listing.findById(id).populate('reviews');
     if (!listing) {
-        throw new ExpressError('Listing not found', 404);
+        req.flash('error', 'Listing not found');
+        return res.redirect('/listings');
     }
     return res.render('listings/show', { listing });
 }
@@ -28,7 +31,8 @@ async function showEditListingForm(req, res) {
     const id=req.params.id;
     const listing = await Listing.findById(id);
     if (!listing) {
-        throw new ExpressError('Listing not found', 404);
+        req.flash('error', 'Listing not found');
+        return res.redirect('/listings');
     }
     return res.render('listings/edit', { listing });
 }
@@ -37,6 +41,7 @@ async function createNewListing(req, res) {
     const listing = req.body.listing;
     const newListing = new Listing(listing);
     await newListing.save();
+    req.flash('success', 'Listing created successfully');
     return res.status(301).redirect('/listings');
 }
 // PUT /listings/:id - Update a listing
@@ -47,6 +52,7 @@ async function updateListing(req, res) {
     if (!updatedListing) {
         throw new ExpressError('Listing not found', 404);
     }
+    req.flash('success', 'Listing updated successfully');
     return res.status(301).redirect(`/listings/${id}`);
 }
 //TODO: Add resistance to delete operation
@@ -57,6 +63,7 @@ async function deleteListing(req, res) {
     if (!deletedListing) {
         throw new ExpressError('Listing not found', 404);
     }
+    req.flash('success', 'Listing deleted successfully');
     return res.status(301).redirect('/listings');
 }
 
@@ -75,6 +82,7 @@ async function createNewReview(req, res) {
         id,
         { $push: { reviews: newReview._id } }
     );
+    req.flash('success', 'Review added successfully');
     return res.status(301).redirect(`/listings/${id}`);
 }
 //DELETE /listings/:id/reviews/:reviewId - Delete a review
@@ -85,6 +93,7 @@ async function deleteReview(req, res) {
     if (!deletedReview) {
         throw new ExpressError('Review not found', 404);
     }
+    req.flash('success', 'Review deleted successfully');
     return res.status(301).redirect(`/listings/${id}`);
 }
 module.exports = {

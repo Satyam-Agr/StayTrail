@@ -3,10 +3,13 @@ const express = require('express');
 const path = require('path');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
+const session = require('express-session');
+const flash = require('connect-flash');
 const connectToMongoDB = require('./utils/connection');
-const listingsRouter = require('./routes/listings');
-const errorHandler = require('./middlewares/errorHandling');
 const ExpressError = require('./utils/errors');
+const errorHandler = require('./middlewares/errorHandling');
+const flashMiddleware = require('./middlewares/flash');
+const listingsRouter = require('./routes/listings');
 
 //global variables
 const app = express();
@@ -15,13 +18,28 @@ const dataBaseUrl = 'mongodb://127.0.0.1:27017/staytrail';
 //connect to MongoDB
 connectToMongoDB(dataBaseUrl);
 //middlewares
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-app.engine('ejs', ejsMate);
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { 
+        httpOnly: true, 
+        secure: false, 
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 1, // 1 day
+        maxAge: 1000 * 60 * 60 * 24 * 1 // 1 day
+    }
+}));
+app.use(flash());
+//custom middlewares
+app.use(flashMiddleware);
+
 //start the server
 app.listen(PORT, () => {
     console.log(`Server is running at: http://localhost:${PORT}`);
