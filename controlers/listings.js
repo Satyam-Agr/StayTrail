@@ -1,4 +1,3 @@
-const flash = require('connect-flash');
 const Listing = require('../models/listing');
 const Review = require('../models/review');
 const ExpressError = require('../utils/errors');

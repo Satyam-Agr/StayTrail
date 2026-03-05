@@ -14,8 +14,13 @@ async function registerUser(req, res) {
         username,
         email
     });
-    await User.register(newUser, password);
-    req.flash('success', 'Registration successful! Please log in.');
+    const registeredUser= await User.register(newUser, password);
+    req.login(registeredUser, (err)=>{
+        if(err)
+            throw new ExpressError(err, 500)
+        req.flash('success', 'Registration successful! Welcome to Stay Trail');
+
+    })
     return res.status(301).redirect('/user/login');
     }catch(e){
         req.flash('error', e.message);
@@ -29,12 +34,22 @@ async function showLoginForm(req, res) {
 // POST /user/login - Handle user login
 async function loginUser(req, res) {
     req.flash('success', 'Welcome back!');
-    return res.redirect('/listings');
+    return res.redirect(res.locals.redirectUrl);
+}
+//GET /user/logout - Handle user logout
+async function logoutUser(req, res) {
+    req.logout((err)=>{
+        if(err)
+            throw new ExpressError(err, 500)
+        req.flash('success', 'Logout succesfull');
+    })
+    return res.redirect("/listings");
 }
 
 module.exports = {
     showRegisterForm,
     registerUser,
     showLoginForm,
-    loginUser
+    loginUser,
+    logoutUser
 }

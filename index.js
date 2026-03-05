@@ -11,7 +11,7 @@ const connectToMongoDB = require('./utils/connection');
 const ExpressError = require('./utils/errors');
 const User = require('./models/user');
 const errorHandler = require('./middlewares/errorHandling');
-const flashMiddleware = require('./middlewares/flash');
+const initializeLocals = require('./middlewares/localVariable');
 const listingsRouter = require('./routes/listings');
 const userRouter = require('./routes/user');
 
@@ -41,15 +41,14 @@ app.use(session({
     }
 }));
 app.use(flash());
-//custom middlewares
-app.use(flashMiddleware);
 //authentication setup
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
+//custom middlewares
+app.use(initializeLocals);
 
 //start the server
 app.listen(PORT, () => {
