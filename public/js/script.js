@@ -13,16 +13,20 @@ const forms = document.querySelectorAll('.needs-validation')
     },)
 })
 //max length validation for title input field
-const titleInput = document.getElementById('title');
-const titleLimitWarning = document.getElementById('titleLimitWarning');
-
-if (titleInput && titleLimitWarning) {
-    titleInput.addEventListener('input', () => {
-        const maxLength = titleInput.maxLength;
-        if (titleInput.value.length === maxLength) {
-            titleLimitWarning.classList.remove('hidden');
-        } else {
-            titleLimitWarning.classList.add('hidden');
-        }
-    });
+const inputs = document.getElementsByClassName('limited-input');
+const limitWarnings = document.getElementsByClassName('limit-warning');
+for(let i=0; i<inputs.length; i++){
+  let input = inputs[i];
+  let limitWarning = limitWarnings[i];
+  if (input && limitWarning) {
+      input.addEventListener('input', () => {
+          const maxLength = input.maxLength;
+          if (input.value.length === maxLength) {
+              limitWarning.classList.remove('hidden');
+          } else {
+              limitWarning.classList.add('hidden');
+          }
+      });
+  }
 }
+

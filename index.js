@@ -5,11 +5,15 @@ const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const session = require('express-session');
 const flash = require('connect-flash');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
 const connectToMongoDB = require('./utils/connection');
 const ExpressError = require('./utils/errors');
+const User = require('./models/user');
 const errorHandler = require('./middlewares/errorHandling');
 const flashMiddleware = require('./middlewares/flash');
 const listingsRouter = require('./routes/listings');
+const userRouter = require('./routes/user');
 
 //global variables
 const app = express();
@@ -39,6 +43,13 @@ app.use(session({
 app.use(flash());
 //custom middlewares
 app.use(flashMiddleware);
+//authentication setup
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 
 //start the server
 app.listen(PORT, () => {
@@ -51,6 +62,8 @@ app.get('/', (req, res) => {
 });
 //listings routes
 app.use('/listings', listingsRouter);
+//user routes
+app.use('/user', userRouter);
 
 //404 handler
 app.use((req, res) => {

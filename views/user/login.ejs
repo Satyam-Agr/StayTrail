@@ -1,0 +1,36 @@
+<% layout('layoutes/boilerplate') -%>
+<section class="row justify-content-center">
+  <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+    <div class="card form-card">
+      <div class="card-body p-4 p-lg-5">
+        <h1 class="mb-4">Log In</h1>
+        <form action="/user/login" method="POST" class="row g-3 needs-validation" novalidate>
+          <div class="col-12">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" id="username" name="username" class="form-control limited-input" maxlength="30" required>
+            <div class="limit-warning hidden">
+              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+              <span>Maximum 30 characters allowed</span>
+            </div>
+            <div class="invalid-feedback">
+              Please enter your username.
+            </div>
+          </div>
+
+          <div class="col-12">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" id="password" name="password" class="form-control" required autocomplete="current-password">
+            <div class="invalid-feedback">
+              Please enter your password.
+            </div>
+          </div>
+
+          <div class="col-12 d-flex flex-wrap gap-2 pt-2">
+            <button type="submit" class="btn btn-brand">Log In</button>
+            <a href="/listings" class="btn btn-outline-dark">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

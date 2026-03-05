@@ -254,7 +254,7 @@ body.app-body {
     box-shadow: 0 0 0 0.2rem rgba(255, 56, 92, 0.15);
 }
 
-.title-limit-warning {
+.limit-warning {
     margin-top: 0.25rem;
     display: inline-flex;
     align-items: center;

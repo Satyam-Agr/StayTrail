@@ -28,9 +28,17 @@ const reviewSchema=joi.object({
         comment:joi.string().required(),
     }).required()
 });
-
+// Validation schema for user signup
+const userSchema=joi.object({
+    user:joi.object({
+        username:joi.string().required().min(3).max(30),
+        email:joi.string().required().email(),
+        password:joi.string().required().min(6)
+    }).required()
+});
 module.exports={
     listingSchema, 
     updateListingSchema,
-    reviewSchema
+    reviewSchema,
+    userSchema
 };

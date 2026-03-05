@@ -1,0 +1,44 @@
+<% layout('layoutes/boilerplate') -%>
+<section class="row justify-content-center">
+  <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+    <div class="card form-card">
+      <div class="card-body p-4 p-lg-5">
+        <h1 class="mb-4">Sign Up</h1>
+        <form action="/user/signup" method="POST" class="row g-3 needs-validation" novalidate>
+          <div class="col-12">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" id="username" name="user[username]" class="form-control limited-input" required minlength="3" maxlength="30">
+            <div class="limit-warning hidden">
+              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+              <span>Maximum 30 characters allowed</span>
+            </div>
+            <div class="invalid-feedback">
+              Username must be atleast 3 characters long.
+            </div>
+          </div>
+
+          <div class="col-12">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" name="user[email]" class="form-control" required autocomplete="email">
+            <div class="invalid-feedback">
+              Please enter a valid email address.
+            </div>
+          </div>
+
+          <div class="col-12">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" id="password" name="user[password]" class="form-control" required minlength="6" autocomplete="new-password">
+            <div class="invalid-feedback">
+              Password must be at least 6 characters.
+            </div>
+          </div>
+
+          <div class="col-12 d-flex flex-wrap gap-2 pt-2">
+            <button type="submit" class="btn btn-brand">Create Account</button>
+            <a href="/listings" class="btn btn-outline-dark">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
