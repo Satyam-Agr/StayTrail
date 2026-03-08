@@ -7,6 +7,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
+require('dotenv').config()
 const connectToMongoDB = require('./utils/connection');
 const ExpressError = require('./utils/errors');
 const User = require('./models/user');
@@ -17,10 +18,8 @@ const userRouter = require('./routes/user');
 
 //global variables
 const app = express();
-const PORT = 3000;
-const dataBaseUrl = 'mongodb://127.0.0.1:27017/staytrail';
 //connect to MongoDB
-connectToMongoDB(dataBaseUrl);
+connectToMongoDB(process.env.DATABASE_URL);
 //middlewares
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -30,7 +29,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(session({
-    secret: 'your-secret-key',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: { 
@@ -51,8 +50,8 @@ passport.deserializeUser(User.deserializeUser());
 app.use(initializeLocals);
 
 //start the server
-app.listen(PORT, () => {
-    console.log(`Server is running at: http://localhost:${PORT}`);
+app.listen(process.env.PORT, () => {
+    console.log(`Server is running at: http://localhost:${process.env.PORT}`);
 });
 //routers
 //TODO: create a home page

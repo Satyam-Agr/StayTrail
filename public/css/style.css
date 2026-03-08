@@ -54,6 +54,25 @@ body.app-body {
     color: var(--brand);
 }
 
+.auth-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+}
+
+.auth-inline-link {
+    display: inline-block;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.auth-inline-divider {
+    color: var(--text-muted);
+    line-height: 1;
+    user-select: none;
+}
+
 .page-title {
     font-size: clamp(1.7rem, 2.6vw, 2.25rem);
     font-weight: 700;
@@ -179,6 +198,36 @@ body.app-body {
     color: var(--text-muted);
 }
 
+.detail-host {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    border: 1px solid var(--line-soft);
+    border-radius: 999px;
+    background: #fff8fa;
+    padding: 0.35rem 0.75rem;
+}
+
+.detail-host-label {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    font-weight: 500;
+}
+
+.detail-host-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 0.92rem;
+}
+
+.detail-host-name i {
+    color: var(--brand);
+    font-size: 0.8rem;
+}
+
 .detail-price {
     font-size: 1.2rem;
     font-weight: 700;
@@ -237,8 +286,78 @@ body.app-body {
     margin-bottom: 0;
 }
 
+.review-author {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.review-author i {
+    color: var(--brand);
+    font-size: 0.8rem;
+}
+
+.review-login-note {
+    color: var(--text-muted);
+    font-size: 0.98rem;
+}
+
 .form-card .form-label {
     font-weight: 600;
+}
+
+.starability-rating {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 0.15rem;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.starability-rating .starability-radio {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.starability-rating label {
+    font-size: 1.75rem;
+    line-height: 1;
+    color: #c7c7c7;
+    cursor: pointer;
+    user-select: none;
+    text-indent: -9999px;
+    overflow: hidden;
+    width: 1.2em;
+    position: relative;
+}
+
+.starability-rating label::before {
+    content: "★";
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-indent: 0;
+}
+
+.starability-rating label:hover,
+.starability-rating label:hover ~ label {
+    color: #f4c542;
+}
+
+.starability-rating .starability-radio:checked ~ label {
+    color: #f4c542;
+}
+
+.starability-rating .starability-radio:focus-visible + label {
+    outline: 2px solid rgba(244, 197, 66, 0.6);
+    outline-offset: 3px;
+    border-radius: 4px;
 }
 
 .form-card .form-control,

@@ -1,6 +1,6 @@
 {
   "name": "staytrail",
-  "version": "0.2.0",
+  "version": "0.4.0",
   "description": "A fullstack ari BNB like project",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,9 @@
   },
   "homepage": "https://github.com/Satyam-Agr/StayTrail#readme",
   "dependencies": {
+    "cloudinary": "^1.41.3",
     "connect-flash": "^0.1.1",
+    "dotenv": "^17.3.1",
     "ejs": "^4.0.1",
     "ejs-mate": "^4.0.0",
     "express": "^5.2.1",
@@ -29,6 +31,8 @@
     "joi": "^18.0.2",
     "method-override": "^3.0.0",
     "mongoose": "^9.2.3",
+    "multer": "^2.1.1",
+    "multer-storage-cloudinary": "^4.0.0",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^9.0.1"

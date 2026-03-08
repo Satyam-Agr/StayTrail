@@ -2,20 +2,29 @@
 <section class="row justify-content-center">
   <div class="col-12 col-lg-9 col-xl-8">
     <article class="card listing-detail-card">
-      <img src="<%= listing.image %>" class="listing-detail-image" alt="<%= listing.title %>">
+      <img src="<%= listing.image.url %>" class="listing-detail-image" alt="<%= listing.title %>">
       <div class="card-body p-4 p-lg-5">
         <h1 class="detail-title"><%= listing.title %></h1>
         <p class="detail-location"><%= listing.location %>, <%= listing.country %></p>
+        <div class="detail-host mb-3">
+          <span class="detail-host-label">Hosted by</span>
+          <span class="detail-host-name">
+            <i class="fa-solid fa-user"></i>
+            <%= listing.owner && listing.owner.username ? listing.owner.username : "StayTrail Host" %>
+          </span>
+        </div>
         <p class="detail-price mb-4">&#8377;<%= listing.price.toLocaleString("en-in") %> <span>/ night</span></p>
         <p class="detail-description"><%= listing.description %></p>
 
         <div class="d-flex flex-wrap gap-2 pt-3">
-          <form action="/listings/<%= listing._id %>/edit" method="GET" class="m-0">
-            <button type="submit" class="btn btn-brand">Edit Listing</button>
-          </form>
-          <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" class="m-0">
-            <button type="submit" class="btn btn-danger-soft">Delete Listing</button>
-          </form>
+          <% if (currentUser && listing.owner && String(listing.owner._id) === String(currentUser._id)) { %>
+            <form action="/listings/<%= listing._id %>/edit" method="GET" class="m-0">
+              <button type="submit" class="btn btn-brand">Edit Listing</button>
+            </form>
+            <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" class="m-0">
+              <button type="submit" class="btn btn-danger-soft">Delete Listing</button>
+            </form>
+          <% } %>
           <form action="/listings" method="GET" class="m-0">
             <button type="submit" class="btn btn-outline-dark">Back to Listings</button>
           </form>
@@ -41,15 +50,21 @@
             <div class="col-12 col-md-6">
               <div class="card review-card h-100">
                 <div class="card-body d-flex flex-column">
+                  <p class="review-author mb-2">
+                    <i class="fa-solid fa-user-pen"></i>
+                    <%= review.auther && review.auther.username ? review.auther.username : "Guest" %>
+                  </p>
                   <div class="review-stars mb-2" aria-label="<%= review.rating %> out of 5 stars">
                     <% for (let i = 1; i <= 5; i++) { %>
                       <span class="<%= i <= review.rating ? 'star-filled' : 'star-empty' %>"><%= i <= review.rating ? '★' : '☆' %></span>
                     <% } %>
                   </div>
                   <p class="card-text review-comment flex-grow-1"><%= review.comment %></p>
-                  <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST" class="m-0 pt-2">
-                    <button type="submit" class="btn btn-danger-soft btn-sm">Delete Review</button>
-                  </form>
+                  <% if (currentUser && review.auther && String(review.auther._id) === String(currentUser._id)) { %>
+                    <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST" class="m-0 pt-2">
+                      <button type="submit" class="btn btn-danger-soft btn-sm">Delete Review</button>
+                    </form>
+                  <% } %>
                 </div>
               </div>
             </div>
@@ -62,33 +77,47 @@
       <div class="col-12">
         <div class="card form-card">
           <div class="card-body p-4 p-lg-5">
-            <h3 class="h5 mb-3">Add Your Review</h3>
-            <form action="/listings/<%= listing._id %>/reviews" method="POST" class="row g-3 needs-validation" novalidate>
-              <div class="col-12 col-md-5">
-                <label for="rating" class="form-label">Rating</label>
-                <select id="rating" name="review[rating]" class="form-select" required>
-                  <option value="" selected disabled>Choose rating</option>
-                  <option value="5">5 - Excellent</option>
-                  <option value="4">4 - Very Good</option>
-                  <option value="3">3 - Good</option>
-                  <option value="2">2 - Fair</option>
-                  <option value="1">1 - Poor</option>
-                </select>
-                <div class="invalid-feedback">
-                  Please select a rating.
+            <% if (currentUser) { %>
+              <h3 class="h5 mb-3">Add Your Review</h3>
+              <form action="/listings/<%= listing._id %>/reviews" method="POST" class="row g-3 needs-validation" novalidate>
+                <div class="col-12 col-md-5">
+                  <label class="form-label d-block mb-2">Rating</label>
+                  <fieldset class="starability-rating" aria-label="Rate this listing">
+                    <input type="radio" id="rating-5" class="starability-radio" name="review[rating]" value="5" required>
+                    <label for="rating-5" title="5 stars">5 stars</label>
+
+                    <input type="radio" id="rating-4" class="starability-radio" name="review[rating]" value="4" required>
+                    <label for="rating-4" title="4 stars">4 stars</label>
+
+                    <input type="radio" id="rating-3" class="starability-radio" name="review[rating]" value="3" required>
+                    <label for="rating-3" title="3 stars">3 stars</label>
+
+                    <input type="radio" id="rating-2" class="starability-radio" name="review[rating]" value="2" required>
+                    <label for="rating-2" title="2 stars">2 stars</label>
+
+                    <input type="radio" id="rating-1" class="starability-radio" name="review[rating]" value="1" required>
+                    <label for="rating-1" title="1 star">1 star</label>
+                  </fieldset>
+                  <div class="invalid-feedback">
+                    Please select a rating.
+                  </div>
                 </div>
-              </div>
-              <div class="col-12">
-                <label for="review" class="form-label">Review</label>
-                <textarea class="form-control" id="review" name="review[comment]" rows="4" required minlength="5"></textarea>
-                <div class="invalid-feedback">
-                  Please add a review (at least 5 characters).
+                <div class="col-12">
+                  <label for="review" class="form-label">Review</label>
+                  <textarea class="form-control" id="review" name="review[comment]" rows="4" required minlength="5"></textarea>
+                  <div class="invalid-feedback">
+                    Please add a review (at least 5 characters).
+                  </div>
                 </div>
-              </div>
-              <div class="col-12 d-flex gap-2">
-                <button type="submit" class="btn btn-brand">Submit Review</button>
-              </div>
-            </form>
+                <div class="col-12 d-flex gap-2">
+                  <button type="submit" class="btn btn-brand">Submit Review</button>
+                </div>
+              </form>
+            <% } else { %>
+              <h3 class="h5 mb-2">Add Your Review</h3>
+              <p class="review-login-note mb-3">Please log in to write a review for this listing.</p>
+              <a href="/user/login" class="btn btn-brand">Log In to Review</a>
+            <% } %>
           </div>
         </div>
       </div>

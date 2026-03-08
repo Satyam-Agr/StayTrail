@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const asyncWrap = require('../utils/asyncWrap');
 const { showRegisterForm, registerUser, showLoginForm, loginUser, logoutUser } = require('../controlers/user');
-const { validateSignup } = require('../middlewares/userValidate');
+const { validateSignup } = require('../middlewares/payloadValidate');
 const passport = require('passport');
 
 // GET /user/signup - Show registration form

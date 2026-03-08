@@ -5,10 +5,13 @@ const listingSchema=joi.object({
         title:joi.string().required().max(60),
         description:joi.string().required(),
         price:joi.number().required().min(0),
-        image:joi.string().allow(null, ""),
+        image:joi.any().allow(null, ""),
         location:joi.string().required(),
         country:joi.string().required()
-    }).required()
+    }).required(),
+    file:joi.any().required().messages({
+        "any.required": "Image upload is required"
+    })
 });
 // Validation schema for updating a listing (same as creating, but image is optional)
 const updateListingSchema=joi.object({
@@ -16,7 +19,7 @@ const updateListingSchema=joi.object({
         title:joi.string().required().max(60),
         description:joi.string().required(),
         price:joi.number().required().min(0),
-        image:joi.string().required(),
+        image:joi.any().allow(null,""),
         location:joi.string().required(),
         country:joi.string().required()
     }).required()

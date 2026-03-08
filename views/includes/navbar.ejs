@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg app-navbar sticky-top">
+<nav class="navbar navbar-expand-md app-navbar sticky-top">
   <div class="container-xl">
     <a class="navbar-brand brand-logo" href="/listings">
       <i class="fa-regular fa-compass"></i>
@@ -15,10 +15,13 @@
       </div>
       <div class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
         <% if (!currentUser) { %>
-          <a class="nav-link px-lg-3" href="/user/login">Login</a>
-          <a class="nav-link px-lg-3" href="/user/signup">Signup</a>
+          <div class="auth-inline mt-3 mt-md-0">
+            <a class="nav-link auth-inline-link p-0" href="/user/login">Login</a>
+            <span class="auth-inline-divider">/</span>
+            <a class="nav-link auth-inline-link p-0" href="/user/signup">Signup</a>
+          </div>
         <% } else { %>
-          <a class="nav-link px-lg-3" href="/user/logout">Logout</a>
+          <a class="nav-link px-lg-3 mt-3 mt-md-0" href="/user/logout">Logout</a>
         <% } %>
       </div>
     </div>

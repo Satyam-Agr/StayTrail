@@ -19,9 +19,8 @@ async function registerUser(req, res) {
         if(err)
             throw new ExpressError(err, 500)
         req.flash('success', 'Registration successful! Welcome to Stay Trail');
-
+        return res.status(301).redirect('/listings');
     })
-    return res.status(301).redirect('/user/login');
     }catch(e){
         req.flash('error', e.message);
         return res.redirect('/user/signup');
@@ -42,8 +41,8 @@ async function logoutUser(req, res) {
         if(err)
             throw new ExpressError(err, 500)
         req.flash('success', 'Logout succesfull');
+        return res.redirect("/listings");
     })
-    return res.redirect("/listings");
 }
 
 module.exports = {

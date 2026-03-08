@@ -5,6 +5,10 @@ const reviewSchema = new Schema({
     rating : { type: Number, required: true, min: 1, max: 5 },
     comment : { type: String, required: true },
     listingId : { type: Schema.Types.ObjectId, ref: 'Listing', required: true },
+    auther: {
+        type: Schema.Types.ObjectId , 
+        ref: "User"
+    },
     createdAt : { type: Date, default: Date.now },
 })
 

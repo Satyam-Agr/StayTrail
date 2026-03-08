@@ -18,7 +18,7 @@ async function showNewListingForm(req, res) {
 // GET /listings/:id - Get a specific listing by ID
 async function showListingDetails(req, res) {
     const id=req.params.id;
-    const listing = await Listing.findById(id).populate('reviews');
+    const listing = await Listing.findById(id).populate({path: "reviews", populate: {path: "auther"}}).populate('owner');
     if (!listing) {
         req.flash('error', 'Listing not found');
         return res.redirect('/listings');
@@ -38,6 +38,13 @@ async function showEditListingForm(req, res) {
 // POST /listings - Create a new listing
 async function createNewListing(req, res) {
     const listing = req.body.listing;
+    listing.owner = req.user._id;
+    // Remove raw multipart field value; set image only from uploaded file.
+    delete listing.image;
+    listing.image = {
+        url: req.file.path,
+        fileName: req.file.filename
+    };
     const newListing = new Listing(listing);
     await newListing.save();
     req.flash('success', 'Listing created successfully');
@@ -47,6 +54,15 @@ async function createNewListing(req, res) {
 async function updateListing(req, res) {
     const id=req.params.id;
     const listing = req.body.listing;
+    delete listing.image;
+
+    if (req.file) {
+        listing.image = {
+            url: req.file.path,
+            fileName: req.file.filename
+        };
+    }
+
     const updatedListing = await Listing.findByIdAndUpdate(id, listing, { new: true, runValidators: true });
     if (!updatedListing) {
         throw new ExpressError('Listing not found', 404);
@@ -71,6 +87,7 @@ async function createNewReview(req, res) {
     const id=req.params.id;
     const review = req.body.review;
     review.listingId = id;
+    review.auther = req.user._id;
     const listing = await Listing.findById(id);
     if (!listing) {
         throw new ExpressError('Listing not found', 404);

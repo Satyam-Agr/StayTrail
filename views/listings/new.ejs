@@ -4,7 +4,7 @@
     <div class="card form-card">
       <div class="card-body p-4 p-lg-5">
         <h1 class="mb-4">Create New Listing</h1>
-        <form action="/listings" method="POST" class="row g-3 needs-validation" novalidate >
+        <form action="/listings" method="POST" class="row g-3 needs-validation" enctype="multipart/form-data" novalidate >
           <div class="col-12">
             <label for="title" class="form-label">Title</label>
             <input type="text" id="title" name="listing[title]" class="form-control limited-input" required maxlength="60">
@@ -34,8 +34,11 @@
           </div>
 
           <div class="col-12 col-md-6">
-            <label for="image" class="form-label">Image URL</label>
-            <input type="text" id="image" name="listing[image]" class="form-control">
+            <label for="image" class="form-label">Upload an Image</label>
+            <input type="file" id="image" name="listing[image]" class="form-control" required>
+            <div class="invalid-feedback">
+                Please upload a valid image.
+            </div>          
           </div>
 
           <div class="col-12 col-md-6">
