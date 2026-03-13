@@ -5,7 +5,6 @@ const listingSchema=joi.object({
         title:joi.string().required().max(60),
         description:joi.string().required(),
         price:joi.number().required().min(0),
-        image:joi.any().allow(null, ""),
         location:joi.string().required(),
         country:joi.string().required()
     }).required(),
@@ -19,7 +18,6 @@ const updateListingSchema=joi.object({
         title:joi.string().required().max(60),
         description:joi.string().required(),
         price:joi.number().required().min(0),
-        image:joi.any().allow(null,""),
         location:joi.string().required(),
         country:joi.string().required()
     }).required()

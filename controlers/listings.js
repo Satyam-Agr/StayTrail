@@ -1,6 +1,7 @@
 const Listing = require('../models/listing');
 const Review = require('../models/review');
 const ExpressError = require('../utils/errors');
+const { cloudinary } = require('../utils/cloudConfig');
 
 //GET /listings - Get all listings
 async function showAllListings(req, res) {
@@ -43,7 +44,7 @@ async function createNewListing(req, res) {
     delete listing.image;
     listing.image = {
         url: req.file.path,
-        fileName: req.file.filename
+        filename: req.file.filename
     };
     const newListing = new Listing(listing);
     await newListing.save();
@@ -57,9 +58,14 @@ async function updateListing(req, res) {
     delete listing.image;
 
     if (req.file) {
+        const oldListing = await Listing.findById(id);
+        const oldPublicId = oldListing?.image?.filename;
+        if (oldPublicId && oldPublicId !== "ExternalLink") {
+            await cloudinary.uploader.destroy(oldPublicId);
+        }
         listing.image = {
             url: req.file.path,
-            fileName: req.file.filename
+            filename: req.file.filename
         };
     }
 

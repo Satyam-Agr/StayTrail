@@ -1,13 +1,12 @@
 const express = require('express');
 const multer = require('multer');
 const asyncWrap = require('../utils/asyncWrap');
-const cloudConfig = require('../utils/cloudConfig');
+const { storage } = require('../utils/cloudConfig');
 const { showAllListings, showNewListingForm, showListingDetails, showEditListingForm, createNewListing, updateListing, deleteListing, createNewReview, deleteReview } = require('../controlers/listings');
 const {validateListing, validateListingUpdate, validateReview} = require('../middlewares/payloadValidate');
 const {isAuthenticated, checkAuthenticated, isAuther, isOwner} = require('../middlewares/auth');
 
-const cloudStorage = cloudConfig();
-const upload = multer({ storage: cloudStorage });
+const upload = multer({ storage });
 const router = express.Router();
 // GET /listings - Get all listings
 router.get('/', asyncWrap(showAllListings));
