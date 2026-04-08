@@ -60,11 +60,7 @@ The project is built as a server-rendered web application using Node.js, Express
 
 ### Validation and Error Handling
 
-- Joi-based server-side validation for:
-  - signup data
-  - listing creation
-  - listing updates
-  - review submission
+- Joi-based server-side validation 
 - Centralized async error wrapping
 - Custom error handling middleware
 - Custom 404 page flow for unknown routes
@@ -86,22 +82,6 @@ The project is built as a server-rendered web application using Node.js, Express
 - Validation: Joi
 - Session and Messaging: Express Session, Connect Flash
 - Utilities: Method Override, Dotenv
-
-## Project Structure
-
-```text
-StayTrail/
-|-- controlers/
-|-- init/
-|-- middlewares/
-|-- models/
-|-- public/
-|-- routes/
-|-- utils/
-|-- views/
-|-- index.js
-|-- package.json
-```
 
 ## Main Routes
 
@@ -125,68 +105,10 @@ StayTrail/
 - `POST /user/login` - log in
 - `GET /user/logout` - log out
 
-## Local Setup
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/Satyam-Agr/StayTrail.git
-cd StayTrail
-```
-
-### 2. Install dependencies
-
-```bash
-npm install
-```
-
-### 3. Create a `.env` file
-
-Add the following environment variables:
-
-```env
-PORT=3000
-DATABASE_URL=your_mongodb_connection_string
-SESSION_SECRET=your_session_secret
-CLOUD_NAME=your_cloudinary_cloud_name
-CLOUD_API_KEY=your_cloudinary_api_key
-CLOUD_SECRET=your_cloudinary_api_secret
-```
-
-### 4. Run the project
-
-```bash
-npm start
-```
-
-For development with auto-restart:
-
-```bash
-npm run dev
-```
-
-Then open:
-
-```text
-http://localhost:3000
-```
 
 ## Current Scope
 
 This version of StayTrail already includes the complete core CRUD flow for listings and reviews, user authentication, session handling, authorization checks, Cloudinary image uploads, and MongoDB persistence.
-
-## Planned Improvements
-
-The repository notes suggest a few future enhancements, such as:
-
-- Better delete confirmation flow
-- Improved error pages
-- Atomic database operations
-- Dedicated home page
-- Server logs
-- Empty state pages
-- Enhanced duplicate email messaging
-- Search bar support
 
 ## Author
 
